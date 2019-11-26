@@ -10,6 +10,9 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.lang.Math;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Utils {
     public static byte[] ImageToByte(String PATH) throws Exception{
@@ -22,12 +25,13 @@ public class Utils {
     public static void ByteToImage(String PATH, byte[] bites) throws Exception{
         ByteArrayInputStream bis = new ByteArrayInputStream(bites);
         BufferedImage bImage2 = ImageIO.read(bis);
+        Files.delete(Paths.get(PATH));
         ImageIO.write(bImage2, "jpg", new File(PATH) );
         System.out.println("image created");
     }
 
-    public static String MakeID(String name){
-        return name;
+    public static int MakeID(String name){
+        return Math.abs(name.hashCode());
     }
 
     public static Object deserialize(String PATH){

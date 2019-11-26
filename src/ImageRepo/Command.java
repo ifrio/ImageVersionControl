@@ -5,7 +5,7 @@ import java.io.File;
 
 public class Command {
     public static String CURR_DIR = Paths.get(".").toAbsolutePath().normalize().toString();
-    private static String PATH = CURR_DIR + "/Repo/happy.txt";
+    private static String PATH = CURR_DIR + "/Repo/history.TrackRecord";
     private static TrackRecord curr_trackRecord;
 
     public static void run(String[] args){
@@ -14,7 +14,7 @@ public class Command {
         int length = args.length;
 
         if (key.equals( "init")){
-            init(args[1]);
+            init(args);
             return;
         }
 
@@ -22,14 +22,14 @@ public class Command {
 
         switch (key) {
             case "add":
-                if (length >= 2) {
+                if (length >= 3) {
                     curr_trackRecord.add(args);
                 } else {
-                    System.out.println("Please add the Image Name");
+                    System.out.println("Please add the Image Name or message");
                 }
                 break;
             case "pull":
-                if (length >= 2) {
+                if (length == 2) {
                     curr_trackRecord.pull(args);
                 } else {
                     System.out.println("Please add the Image Name or pull id (See log)");
@@ -44,7 +44,7 @@ public class Command {
         Utils.serialize(PATH, curr_trackRecord);
     }
 
-    public  static void init(String filePATH){
+    public  static void init(String[] filePATH){
         File imageRepo = new File(CURR_DIR + "/Repo");
         if (imageRepo.exists()) {
             System.out.println("A Image Repo already exists in the current directory.");
